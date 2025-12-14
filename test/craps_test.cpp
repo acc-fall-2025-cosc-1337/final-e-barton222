@@ -3,6 +3,7 @@
 #include "die.h"
 #include "roll.h"
 #include "shooter.h"
+#include "come_out_phase.h"
 
 TEST_CASE("Roll returns value from 2 to 12", "[Roll]") {
     Die die1;
@@ -38,6 +39,23 @@ TEST_CASE("Shooter throws dice and returns valid Roll", "[Shooter]") {
         REQUIRE(value >= 2);
         REQUIRE(value <= 12);
     }
+}
+
+TEST_CASE("ComeOutPhase outcomes", "[ComeOutPhase]") {
+    Die d1, d2;
+    Roll roll(d1, d2);
+    ComeOutPhase phase;
+
+    roll.roll_dice();
+    int value = roll.roll_value();
+
+    RollOutcome outcome = phase.get_outcome(&roll);
+
+    REQUIRE(
+        outcome == RollOutcome::natural ||
+        outcome == RollOutcome::craps ||
+        outcome == RollOutcome::point
+    );
 }
 
 TEST_CASE("Verify Test Configuration", "verification") {
