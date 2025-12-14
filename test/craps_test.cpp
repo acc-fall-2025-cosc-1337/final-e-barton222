@@ -2,6 +2,7 @@
 #include "catch.hpp"
 #include "die.h"
 #include "roll.h"
+#include "shooter.h"
 
 TEST_CASE("Roll returns value from 2 to 12", "[Roll]") {
     Die die1;
@@ -23,6 +24,19 @@ TEST_CASE("Die rolls values from 1 to 6", "[Die]") {
         int value = die.roll();
         REQUIRE(value >= 1);
         REQUIRE(value <= 6);
+    }
+}
+
+TEST_CASE("Shooter throws dice and returns valid Roll", "[Shooter]") {
+    Die die1;
+    Die die2;
+    Shooter shooter;
+
+    for (int i = 0; i < 10; i++) {
+        Roll* roll = shooter.throw_dice(die1, die2);
+        int value = roll->roll_value();
+        REQUIRE(value >= 2);
+        REQUIRE(value <= 12);
     }
 }
 
